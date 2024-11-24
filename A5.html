@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .page {
+            display: none;
+            padding: 20px;
+        }
+        .page.active {
+            display: block;
+        }
+        .container {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#" id="homeBtn">Home</a>
+        <a href="#" id="aboutBtn">About</a>
+        <a href="#" id="contactBtn">Contact</a>
+    </nav>
+
+    <div id="home" class="page active">
+        <div class="container">
+            <h1>Home Page</h1>
+            <p>Welcome to the home page.</p>
+        </div>
+    </div>
+
+    <div id="about" class="page">
+        <div class="container">
+            <h1>About Page</h1>
+            <p>This is the about page.</p>
+        </div>
+    </div>
+
+    <div id="contact" class="page">
+        <div class="container">
+            <h1>Contact Page</h1>
+            <p>This is the contact page.</p>
+        </div>
+    </div>
+
+    <script>
+        const homeBtn = document.getElementById('homeBtn');
+        const aboutBtn = document.getElementById('aboutBtn');
+        const contactBtn = document.getElementById('contactBtn');
+        
+        const homePage = document.getElementById('home');
+        const aboutPage = document.getElementById('about');
+        const contactPage = document.getElementById('contact');
+        
+        function showPage(page) {
+            homePage.classList.remove('active');
+            aboutPage.classList.remove('active');
+            contactPage.classList.remove('active');
+            page.classList.add('active');
+        }
+
+        homeBtn.addEventListener('click', () => showPage(homePage));
+        aboutBtn.addEventListener('click', () => showPage(aboutPage));
+        contactBtn.addEventListener('click', () => showPage(contactPage));
+    </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Video Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .video-container {
+            position: relative;
+            width: 80%;
+            max-width: 600px;
+            background-color: #000;
+        }
+        video {
+            width: 100%;
+            display: block;
+        }
+        .controls {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
+        .play-pause, .fullscreen, .mute, .seek-bar {
+            cursor: pointer;
+        }
+        .seek-bar {
+            width: 100%;
+            height: 5px;
+            background: #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .seek-bar input {
+            width: 100%;
+            background: #ff6347;
+            border: none;
+            height: 5px;
+        }
+        .volume-slider {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="video-container">
+        <video id="video" src="https://www.w3schools.com/html/mov_bbb.mp4" preload="metadata"></video>
+        <div class="controls">
+            <button class="play-pause" id="playPauseBtn">Play</button>
+            <input type="range" class="seek-bar" id="seekBar" value="0">
+            <input type="range" class="volume-slider" id="volumeSlider" value="100" max="100">
+            <button class="mute" id="muteBtn">Mute</button>
+            <button class="fullscreen" id="fullscreenBtn">Fullscreen</button>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const seekBar = document.getElementById('seekBar');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const muteBtn = document.getElementById('muteBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        playPauseBtn.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                playPauseBtn.textContent = 'Pause';
+            } else {
+                video.pause();
+                playPauseBtn.textContent = 'Play';
+            }
+        });
+
+        video.addEventListener('timeupdate', () => {
+            const value = (video.currentTime / video.duration) * 100;
+            seekBar.value = value;
+        });
+
+        seekBar.addEventListener('input', () => {
+            const value = seekBar.value * video.duration / 100;
+            video.currentTime = value;
+        });
+
+        volumeSlider.addEventListener('input', () => {
+            video.volume = volumeSlider.value / 100;
+        });
+
+        muteBtn.addEventListener('click', () => {
+            if (video.muted) {
+                video.muted = false;
+                muteBtn.textContent = 'Mute';
+            } else {
+                video.muted = true;
+                muteBtn.textContent = 'Unmute';
+            }
+        });
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                video.requestFullscreen();
+            }
+        });
+
+        video.addEventListener('ended', () => {
+            playPauseBtn.textContent = 'Play';
+        });
+    </script>
+</body>
+</html>
